@@ -7,29 +7,30 @@ class Marcapasos:
         self.__almbrico_o_inalambrico = ""
         self.__frecuencia_estimulacion = 0.0
 
-    # Getters y Setters
-    def get_nombre(self):
+    # Getters
+    def ver_nombre(self):
         return self.__nombre
 
-    def set_nombre(self, nombre):
-        self.__nombre = nombre
-
-    def get_num_electrodos(self):
+    def ver_num_electrodos(self):
         return self.__num_electrodos
 
-    def set_num_electrodos(self, num_electrodos):
-        self.__num_electrodos = num_electrodos
-
-    def get_almbrico_o_inalambrico(self):
+    def ver_almbrico_o_inalambrico(self):
         return self.__almbrico_o_inalambrico
 
-    def set_almbrico_o_inalambrico(self, almbrico_o_inalambrico):
-        self.__almbrico_o_inalambrico = almbrico_o_inalambrico
-
-    def get_frecuencia_estimulacion(self):
+    def ver_frecuencia_estimulacion(self):
         return self.__frecuencia_estimulacion
 
-    def set_frecuencia_estimulacion(self, frecuencia_estimulacion):
+    # Setters
+    def asignar_nombre(self, nombre):
+        self.__nombre = nombre
+
+    def asignar_num_electrodos(self, num_electrodos):
+        self.__num_electrodos = num_electrodos
+
+    def asignar_almbrico_o_inalambrico(self, almbrico_o_inalambrico):
+        self.__almbrico_o_inalambrico = almbrico_o_inalambrico
+
+    def asignar_frecuencia_estimulacion(self, frecuencia_estimulacion):
         self.__frecuencia_estimulacion = frecuencia_estimulacion
 
 
@@ -40,29 +41,30 @@ class StentCoronario:
         self.__diametro = 0.0
         self.__material = ""
 
-    # Getters y Setters
-    def get_nombre(self):
+    # Getters
+    def ver_nombre(self):
         return self.__nombre
 
-    def set_nombre(self, nombre):
-        self.__nombre = nombre
-
-    def get_longitud(self):
+    def ver_longitud(self):
         return self.__longitud
 
-    def set_longitud(self, longitud):
-        self.__longitud = longitud
-
-    def get_diametro(self):
+    def ver_diametro(self):
         return self.__diametro
 
-    def set_diametro(self, diametro):
-        self.__diametro = diametro
-
-    def get_material(self):
+    def ver_material(self):
         return self.__material
 
-    def set_material(self, material):
+    # Setters
+    def asignar_nombre(self, nombre):
+        self.__nombre = nombre
+
+    def asignar_longitud(self, longitud):
+        self.__longitud = longitud
+
+    def asignar_diametro(self, diametro):
+        self.__diametro = diametro
+
+    def asignar_material(self, material):
         self.__material = material
 
 
@@ -73,29 +75,30 @@ class ImplanteDental:
         self.__sis_fijacion = ""
         self.__material = ""
 
-    # Getters y Setters
-    def get_nombre(self):
+    # Getters
+    def ver_nombre(self):
         return self.__nombre
 
-    def set_nombre(self, nombre):
-        self.__nombre = nombre
-
-    def get_forma(self):
+    def ver_forma(self):
         return self.__forma
 
-    def set_forma(self, forma):
-        self.__forma = forma
-
-    def get_sis_fijacion(self):
+    def ver_sis_fijacion(self):
         return self.__sis_fijacion
 
-    def set_sis_fijacion(self, sis_fijacion):
-        self.__sis_fijacion = sis_fijacion
-
-    def get_material(self):
+    def ver_material(self):
         return self.__material
 
-    def set_material(self, material):
+    # Setters
+    def asignar_nombre(self, nombre):
+        self.__nombre = nombre
+
+    def asignar_forma(self, forma):
+        self.__forma = forma
+
+    def asignar_sis_fijacion(self, sis_fijacion):
+        self.__sis_fijacion = sis_fijacion
+
+    def asignar_material(self, material):
         self.__material = material
 
 
@@ -106,35 +109,37 @@ class ImplanteRodilla:
         self.__tipo_fijacion = ""
         self.__tamaño = 0.0
 
-    # Getters y Setters
-    def get_nombre(self):
+    # Getters
+    def ver_nombre(self):
         return self.__nombre
 
-    def set_nombre(self, nombre):
-        self.__nombre = nombre
-
-    def get_material(self):
+    def ver_material(self):
         return self.__material
 
-    def set_material(self, material):
-        self.__material = material
-
-    def get_tipo_fijacion(self):
+    def ver_tipo_fijacion(self):
         return self.__tipo_fijacion
 
-    def set_tipo_fijacion(self, tipo_fijacion):
-        self.__tipo_fijacion = tipo_fijacion
-
-    def get_tamaño(self):
+    def ver_tamaño(self):
         return self.__tamaño
 
-    def set_tamaño(self, tamaño):
+    # Setters
+    def asignar_nombre(self, nombre):
+        self.__nombre = nombre
+
+    def asignar_material(self, material):
+        self.__material = material
+
+    def asignar_tipo_fijacion(self, tipo_fijacion):
+        self.__tipo_fijacion = tipo_fijacion
+
+    def asignar_tamaño(self, tamaño):
         self.__tamaño = tamaño
 
 
 class ImplanteCadera(ImplanteRodilla):
     def __init__(self):
         super().__init__()
+
 
 class Paciente:
     def __init__(self):
@@ -143,66 +148,52 @@ class Paciente:
         self.__edad = 0
         self.__implantes = []
 
-    def get_nombre(self):
-        return self.__nombre
-
-    def set_nombre(self, nombre):
+    def asignar_nombre(self, nombre):
         self.__nombre = nombre
 
-    def get_cedula(self):
-        return self.__cedula
-
-    def set_cedula(self, cedula):
+    def asignar_cedula(self, cedula):
         self.__cedula = cedula
 
-    def get_edad(self):
-        return self.__edad
-
-    def set_edad(self, edad):
+    def asignar_edad(self, edad):
         self.__edad = edad
 
-    def asignar_implante(self, implante, fecha_implantacion, medico_responsable):
-        implante_info = {
-            "implante": implante,
-            "fecha_implantacion": fecha_implantacion,
-            "medico_responsable": medico_responsable,
-            "fecha_revision": None,
-            "estado_implante": "En buen estado"
-        }
-        self.__implantes.append(implante_info)
+
+    def ver_nombre(self):
+        return self.__nombre
+
+    def ver_cedula(self):
+        return self.__cedula
+
+    def ver_edad(self):
+        return self.__edad
+
+    def asignar_implante(self, implante, fecha_implantacion):
+        self.__implantes.append({"implante": implante, "fecha_implantacion": fecha_implantacion})
 
     def ver_implantes(self):
         return self.__implantes
 
-    def seguimiento_implante(self, fecha_revision, estado_implante):
-        for implante_info in self.__implantes:
-            if implante_info['estado_implante'] == "En buen estado":
-                implante_info['fecha_revision'] = fecha_revision
-                implante_info['estado_implante'] = estado_implante
-                return f"\nSeguimiento del implante '{implante_info['implante'].get_nombre()}':\n" \
-                    f"Fecha de implantación: {implante_info['fecha_implantacion']}\n" \
-                    f"Médico responsable: {implante_info['medico_responsable']}\n" \
-                    f"Fecha de revisión: {implante_info['fecha_revision']}\n" \
-                    f"Estado actual: {implante_info['estado_implante']}"
-            break
-
-    def visualizar_seguimiento_implantes(self):
+    def ver_info_paciente(self):
         if self.__implantes:
-            print("-" * 30)
-            print(f"Seguimiento de Implantes para el paciente {self.get_nombre()}")
-            print("-" * 30)
+            info_implantes = ""
             for implante_info in self.__implantes:
-                print(f"\nImplante: {implante_info['implante'].get_nombre()}")
-                print(f"Fecha de implantación: {implante_info['fecha_implantacion']}")
-                print(f"Médico responsable: {implante_info['medico_responsable']}")
-                print(f"Fecha de revisión: {implante_info['fecha_revision']}")
-                print(f"Estado de seguimiento: {implante_info['estado_implante']}")
-            print("-" * 30)
+                info_implantes += f"\n  - Nombre de la prótesis: {implante_info['implante'].ver_nombre()}\n"
+                info_implantes += f"    Fecha de implantación: {implante_info['fecha_implantacion']}\n"
+            return f"Nombre: {self.__nombre}, Cédula: {self.__cedula}, Edad: {self.__edad}, Implantes:{info_implantes}"
         else:
-            print("El paciente no tiene asignado ningún implante.")
+            return f"Nombre: {self.__nombre}, Cédula: {self.__cedula}, Edad: {self.__edad}, Este paciente no tiene prótesis asignadas."
 
+    def seguimiento_implante(self, fecha_revision, estado):
+        if self.__implantes:
+            for implante_info in self.__implantes:
+                print(f"\nEl paciente tiene asignado el implante '{implante_info['implante'].ver_nombre()}'.\n"
+                    f"Fecha de implantación: {implante_info['fecha_implantacion']}\n"
+                    f"Estado actual: {estado}\nFecha de revisión: {fecha_revision}")
+        else:
+            print("El paciente no tiene asignado un implante.")
 
-
+# class Protesis_asignadas:
+    
 
 class Sistema:
     def __init__(self):
@@ -231,23 +222,23 @@ class Sistema:
 
     def ver_implante_por_nombre(self, nombre_implante):
         for marcapasos in self.__lista_marcapasos:
-            if marcapasos.get_nombre() == nombre_implante:
+            if marcapasos.ver_nombre() == nombre_implante:
                 yield marcapasos
 
         for stent in self.__lista_stent_coronario:
-            if stent.get_nombre() == nombre_implante:
+            if stent.ver_nombre() == nombre_implante:
                 yield stent
 
         for imp_dental in self.__lista_implante_dental:
-            if imp_dental.get_nombre() == nombre_implante:
+            if imp_dental.ver_nombre() == nombre_implante:
                 yield imp_dental
 
         for imp_rodilla in self.__lista_imp_rodilla:
-            if imp_rodilla.get_nombre() == nombre_implante:
+            if imp_rodilla.ver_nombre() == nombre_implante:
                 yield imp_rodilla
 
         for imp_cadera in self.__lista_imp_cadera:
-            if imp_cadera.get_nombre() == nombre_implante:
+            if imp_cadera.ver_nombre() == nombre_implante:
                 yield imp_cadera
 
     def ver_marcapasos(self):
@@ -259,7 +250,7 @@ class Sistema:
     def ver_implante_dental(self):
         return self.__lista_implante_dental
 
-    def ver_implante_rodilla(self):
+    def ver_implante_rodilla(self):     
         return self.__lista_imp_rodilla
 
     def ver_implante_cadera(self):
@@ -267,22 +258,18 @@ class Sistema:
 
     def ingresar_paciente(self, paciente):
         self.__lista_pacientes.append(paciente)
-    # no funciona
-    def eliminar_protesis(self, nombre_protesis):
+
+    def eliminar_protesis(self, protesis):
         for lista in [self.__lista_marcapasos, self.__lista_stent_coronario, self.__lista_implante_dental,
                     self.__lista_imp_rodilla, self.__lista_imp_cadera]:
-            for protesis in lista:
-                if protesis.get_nombre() == nombre_protesis:
-                    lista.remove(protesis)
-                    print(f"Prótesis '{nombre_protesis}' eliminada con éxito.")
-                    return
-        print(f"Prótesis '{nombre_protesis}' no encontrada.")
+            if protesis in lista:
+                lista.remove(protesis)
 
     def editar_protesis(self, nombre_protesis, atributo, nuevo_valor):
         for lista in [self.__lista_marcapasos, self.__lista_stent_coronario, self.__lista_implante_dental,
                     self.__lista_imp_rodilla, self.__lista_imp_cadera]:
             for protesis in lista:
-                if protesis.get_nombre() == nombre_protesis:
+                if protesis.ver_nombre() == nombre_protesis:
                     setattr(protesis, atributo, nuevo_valor)
                     print(f"Edición exitosa. Nuevo valor para '{atributo}': {nuevo_valor}")
                     return
@@ -293,27 +280,27 @@ class Sistema:
 
     def hacer_seguimiento_paciente(self, nombre_paciente):
         for paciente in self.__lista_pacientes:
-            if paciente.get_nombre() == nombre_paciente:
+            if paciente.ver_nombre() == nombre_paciente:
                 print("-" * 30)
                 print(f"Seguimiento del paciente {nombre_paciente}")
                 print("-" * 30)
-                print(f"Cédula: {paciente.get_cedula()}")
-                print(f"Edad: {paciente.get_edad()} años")
+                print(f"Cédula: {paciente.ver_cedula()}")
+                print(f"Edad: {paciente.ver_edad()} años")
 
-                implantes_paciente = paciente.ver_implantes()
+                implantes_paciente = paciente.ver_nombre()
                 if implantes_paciente:
                     print("\nPrótesis asignadas:")
-                    for implante_info in implantes_paciente:
-                        print(f"Nombre: {implante_info['implante'].get_nombre()}, "
-                            f"Fecha de implantación: {implante_info['fecha_implantacion']}, "
-                            f"Estado: {implante_info['estado_implante']}, "
-                            f"Fecha de revisión: {implante_info.get('fecha_revision', 'No revisado')}")
+                    for implante, fecha_implantacion in paciente.ver_implantes():
+                        print(f"Nombre: {implante.ver_implantes()}, Fecha de implantación: {fecha_implantacion}")
                 else:
                     print("\nEste paciente no tiene prótesis asignadas.")
                 print("-" * 30)
                 return
 
-        print(f"Paciente '{nombre_paciente}' no encontrado.")
+        print(f"Paciente '{nombre_paciente}' no encontrado.") 
+
+    
+
 
 def main():
     sistema = Sistema()
@@ -325,8 +312,7 @@ def main():
         try:
             # MENÚ
             print("¿Qué desea hacer?\n")
-            print("1. Agregar nuevo implante\n2. Eliminar\n3. Editar\n4. Visualizar\n"
-                "5. Asignación de prótesis a paciente\n6. Seguimiento\n7. Visualizar seguimiento")
+            print("1. Agregar nuevo implante\n2. Eliminar\n3. Editar\n4. Visualizar\n5. Asignación de prótesis a paciente\n6. Seguimiento")
             inicio = int(input("Ingrese una opción: "))
 
             # AGREGAR NUEVA PRÓTESIS
@@ -346,10 +332,10 @@ def main():
                         frec_estimu = float(input("Frecuencia de estimulación: "))
 
                         marcapasos = Marcapasos()
-                        marcapasos.set_nombre(nombre)
-                        marcapasos.set_num_electrodos(num_electrodos)
-                        marcapasos.set_almbrico_o_inalambrico(alambrico_inalambrico)
-                        marcapasos.set_frecuencia_estimulacion(frec_estimu)
+                        marcapasos.asignar_nombre(nombre)
+                        marcapasos.asignar_num_electrodos(num_electrodos)
+                        marcapasos.asignar_almbrico_o_inalambrico(alambrico_inalambrico)
+                        marcapasos.asignar_frecuencia_estimulacion(frec_estimu)
 
                         sistema.ingresar_marcapasos(marcapasos)
                         print("¡Registro Exitoso!")
@@ -360,10 +346,10 @@ def main():
                         material = input("Material: ")
 
                         stent = StentCoronario()
-                        stent.set_nombre(nombre)
-                        stent.set_longitud(longitud)
-                        stent.set_diametro(diametro)
-                        stent.set_material(material)
+                        stent.asignar_nombre(nombre)
+                        stent.asignar_longitud(longitud)
+                        stent.asignar_diametro(diametro)
+                        stent.asignar_material(material)
 
                         sistema.ingresar_stent_coronario(stent)
                         print("¡Registro Exitoso!")
@@ -374,10 +360,10 @@ def main():
                         material = input("Material: ")
 
                         imp_dental = ImplanteDental()
-                        imp_dental.set_nombre(nombre)
-                        imp_dental.set_forma(forma)
-                        imp_dental.set_sis_fijacion(sis_fijacion)
-                        imp_dental.set_material(material)
+                        imp_dental.asignar_nombre(nombre)
+                        imp_dental.asignar_forma(forma)
+                        imp_dental.asignar_sis_fijacion(sis_fijacion)
+                        imp_dental.asignar_material(material)
 
                         sistema.ingresar_implante_dental(imp_dental)
                         print("¡Registro Exitoso!")
@@ -388,10 +374,10 @@ def main():
                         tamaño = float(input("Tamaño: "))
 
                         imp_rodilla = ImplanteRodilla()
-                        imp_rodilla.set_nombre(nombre)
-                        imp_rodilla.set_material(material)
-                        imp_rodilla.set_tipo_fijacion(tipo_fijacion)
-                        imp_rodilla.set_tamaño(tamaño)
+                        imp_rodilla.asignar_nombre(nombre)
+                        imp_rodilla.asignar_material(material)
+                        imp_rodilla.asignar_tipo_fijacion(tipo_fijacion)
+                        imp_rodilla.asignar_tamaño(tamaño)
 
                         sistema.ingresar_implante_rodilla(imp_rodilla)
                         print("¡Registro Exitoso!")
@@ -402,10 +388,10 @@ def main():
                         tamaño = float(input("Tamaño: "))
 
                         imp_cadera = ImplanteCadera()
-                        imp_cadera.set_nombre(nombre)
-                        imp_cadera.set_material(material)
-                        imp_cadera.set_tipo_fijacion(tipo_fijacion)
-                        imp_cadera.set_tamaño(tamaño)
+                        imp_cadera.asignar_nombre(nombre)
+                        imp_cadera.asignar_material(material)
+                        imp_cadera.asignar_tipo_fijacion(tipo_fijacion)
+                        imp_cadera.asignar_tamaño(tamaño)
 
                         sistema.ingresar_implante_cadera(imp_cadera)
                         print("¡Registro Exitoso!")
@@ -422,7 +408,20 @@ def main():
                     print("-" * 30)
                     nombre_protesis = input("Ingrese el nombre de la prótesis que desea eliminar: ")
 
-                    sistema.eliminar_protesis(nombre_protesis)
+                    if tipo_protesis == 1:
+                        sistema.eliminar_protesis(nombre_protesis)
+
+                    elif tipo_protesis == 2:
+                        sistema.eliminar_protesis(nombre_protesis)
+
+                    elif tipo_protesis == 3:
+                        sistema.eliminar_protesis(nombre_protesis)
+
+                    elif tipo_protesis == 4:
+                        sistema.eliminar_protesis(nombre_protesis)
+
+                    elif tipo_protesis == 5:
+                        sistema.eliminar_protesis(nombre_protesis)
 
                     print(f"Prótesis '{nombre_protesis}' eliminada con éxito.")
 
@@ -453,24 +452,24 @@ def main():
                 print("-" * 30)
                 print("Inventario completo:")
                 for marcapasos in sistema.ver_marcapasos():
-                    print(f"Tipo: Marcapasos, Nombre: {marcapasos.get_nombre()}, Electrodos: {marcapasos.get_num_electrodos()}, "
-                        f"Alámbrico/Inalámbrico: {marcapasos.get_almbrico_o_inalambrico()}, Frecuencia: {marcapasos.get_frecuencia_estimulacion()}")
+                    print(f"Tipo: Marcapasos, Nombre: {marcapasos.ver_nombre()}, Electrodos: {marcapasos.ver_num_electrodos()}, "
+                        f"Alámbrico/Inalámbrico: {marcapasos.ver_almbrico_o_inalambrico()}, Frecuencia: {marcapasos.ver_frecuencia_estimulacion()}")
 
                 for stent in sistema.ver_stent_coronario():
-                    print(f"Tipo: Stent Coronario, Nombre: {stent.get_nombre()}, Longitud: {stent.get_longitud()}, "
-                        f"Diametro: {stent.get_diametro()}, Material: {stent.get_material()}")
+                    print(f"Tipo: Stent Coronario, Nombre: {stent.ver_nombre()}, Longitud: {stent.ver_longitud()}, "
+                        f"Diametro: {stent.ver_diametro()}, Material: {stent.ver_material()}")
 
                 for imp_dental in sistema.ver_implante_dental():
-                    print(f"Tipo: Implante Dental, Nombre: {imp_dental.get_nombre()}, Forma: {imp_dental.get_forma()}, "
-                        f"Sistema de Fijación: {imp_dental.get_sis_fijacion()}, Material: {imp_dental.get_material()}")
+                    print(f"Tipo: Implante Dental, Nombre: {imp_dental.ver_nombre()}, Forma: {imp_dental.ver_forma()}, "
+                        f"Sistema de Fijación: {imp_dental.ver_sis_fijacion()}, Material: {imp_dental.ver_material()}")
 
                 for imp_rodilla in sistema.ver_implante_rodilla():
-                    print(f"Tipo: Implante de Rodilla, Nombre: {imp_rodilla.get_nombre()}, Material: {imp_rodilla.get_material()}, "
-                        f"Tipo de Fijación: {imp_rodilla.get_tipo_fijacion()}, Tamaño: {imp_rodilla.get_tamaño()}")
+                    print(f"Tipo: Implante de Rodilla, Nombre: {imp_rodilla.ver_nombre()}, Material: {imp_rodilla.ver_material()}, "
+                        f"Tipo de Fijación: {imp_rodilla.ver_tipo_fijacion()}, Tamaño: {imp_rodilla.ver_tamaño()}")
 
                 for imp_cadera in sistema.ver_implante_cadera():
-                    print(f"Tipo: Implante de Cadera, Nombre: {imp_cadera.get_nombre()}, Material: {imp_cadera.get_material()}, "
-                        f"Tipo de Fijación: {imp_cadera.get_tipo_fijacion()}, Tamaño: {imp_cadera.get_tamaño()}")
+                    print(f"Tipo: Implante de Cadera, Nombre: {imp_cadera.ver_nombre()}, Material: {imp_cadera.ver_material()}, "
+                        f"Tipo de Fijación: {imp_cadera.ver_tipo_fijacion()}, Tamaño: {imp_cadera.ver_tamaño()}")
 
                 print("-" * 30)
 
@@ -486,18 +485,19 @@ def main():
 
                 # Crear un nuevo objeto de paciente
                 nuevo_paciente = Paciente()
-                nuevo_paciente.set_nombre(nombre_paciente)
-                nuevo_paciente.set_cedula(cedula_paciente)
-                nuevo_paciente.set_edad(edad_paciente)
+                nuevo_paciente.asignar_nombre(nombre_paciente)
+                nuevo_paciente.asignar_cedula(cedula_paciente)
+                nuevo_paciente.asignar_edad(edad_paciente)
 
                 # Agregar el paciente al sistema
                 sistema.ingresar_paciente(nuevo_paciente)
                 print(f"Paciente '{nombre_paciente}' creado exitosamente.")
 
+                
+            
                 # Asignar prótesis al paciente
                 implante_a_asignar = input("Ingrese el nombre del implante a asignar: ")
                 fecha_implantacion = input("Ingrese la fecha de implantación (YYYY-MM-DD): ")
-                medico_responsable = input("Ingrese el nombre del médico responsable: ")  # Agregado
 
                 # Verificar si el implante existe en el inventario
                 implante_existente = None
@@ -507,57 +507,27 @@ def main():
 
                 if implante_existente:
                     # Asignar implante al paciente
-                    nuevo_paciente.asignar_implante(implante_existente, fecha_implantacion, medico_responsable)  # Corregido
+                    nuevo_paciente.asignar_implante(implante_existente, fecha_implantacion)
                     print(f"Implante '{implante_a_asignar}' asignado exitosamente al paciente '{nombre_paciente}'.")
                 else:
                     print(f"Implante '{implante_a_asignar}' no encontrado en el inventario.")
-
-            # SEGUMIENTO DE PACIENTES E IMPLANTES
+                            
             elif inicio == 6:
                 print("-" * 30)
-                print("Seguimiento de Pacientes e Implantes")
+                print("Seguimiento de Pacientes")
                 print("-" * 30)
 
                 nombre_paciente_seguimiento = input("Ingrese el nombre del paciente: ")
-                fecha_revision = input("Ingrese la fecha de revisión (YYYY-MM-DD): ")
-                estado_implante = input("Ingrese el estado del implante: ")
-
                 for paciente in sistema.ver_pacientes():
-                    if paciente.get_nombre() == nombre_paciente_seguimiento:
-                        seguimiento_info = paciente.seguimiento_implante(fecha_revision, estado_implante)
-
-                        
-                
-                
-                        
-
-            # SALIR
-            elif inicio == 7:
-                print("-" * 30)
-                print("Visualizar Seguimiento de Implantes")
-                print("-" * 30)
-
-                nombre_paciente_seguimiento = input("Ingrese el nombre del paciente: ")
-
-                for paciente in sistema.ver_pacientes():
-                    if paciente.get_nombre() == nombre_paciente_seguimiento:
-                        paciente.visualizar_seguimiento_implantes()  # Corregido
+                    if paciente.ver_nombre() == nombre_paciente_seguimiento:
+                        paciente.seguimiento_implante(datetime.now().strftime("%Y/%m/%d"), "En buen estado")
                         break
                 else:
                     print(f"Paciente '{nombre_paciente_seguimiento}' no encontrado.")
 
-            elif inicio == 8:
-                print("Saliendo del sistema...")
-                break
-
-            else:
-                print("Opción no válida. Intente de nuevo.")
-
         except ValueError:
-            print("Por favor, ingrese una opción válida.")
+            print("Error: Ingrese un valor válido")
+
 
 if __name__ == "__main__":
     main()
-
-
-

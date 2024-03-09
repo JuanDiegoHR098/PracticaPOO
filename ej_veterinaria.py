@@ -257,3 +257,31 @@ while True:
             
     except ValueError:
         print("Ingrese un valor valido.")
+
+
+        
+            #################################### SEGUIMIENTO DE IMPLANTES ###############################################
+            # elif inicio == 6:
+            #     print("-" * 30)
+            #     print("Seguimiento de Implantes")
+            #     print("-" * 30)
+
+            #     nombre_paciente = input("Ingrese el nombre del paciente: ")
+            #     cedula_paciente = int(input("Ingrese la cédula del paciente: "))
+            #     nombre_implante = input("Ingrese el nombre del implante a realizar seguimiento: ")
+
+            #     # Buscar paciente
+            #     paciente_encontrado = None
+            #     for paciente in sistema.ver_lista_pacientes():
+            #         if paciente.ver_nombre() == nombre_paciente and paciente.ver_cedula() == cedula_paciente:
+            #             paciente_encontrado = paciente
+            #             break
+
+            #     if paciente_encontrado:
+            #         # Realizar seguimiento del implante
+            #         fecha_revision = input("Ingrese la fecha de revisión del implante (YYYY-MM-DD): ")
+            #         estado_implante = input("Ingrese el nuevo estado del implante: ")
+
+            #         paciente_encontrado.seguimiento_implante(nombre_implante, fecha_revision, estado_implante)
+            #     else:
+            #         print(f"Paciente '{nombre_paciente}' con cédula '{cedula_paciente}' no encontrado.")
