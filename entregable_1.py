@@ -271,7 +271,7 @@ class Sistema:
     def eliminar_protesis(self, nombre_protesis):
         for lista in [self.__lista_marcapasos, self.__lista_stent_coronario, self.__lista_implante_dental,
                     self.__lista_imp_rodilla, self.__lista_imp_cadera]:
-            for protesis in lista:
+            for protesis in lista[:]:  # Utiliza una copia de la lista para evitar problemas al modificarla
                 if protesis.get_nombre() == nombre_protesis:
                     lista.remove(protesis)
                     print(f"Prótesis '{nombre_protesis}' eliminada con éxito.")
@@ -423,11 +423,6 @@ def main():
                     nombre_protesis = input("Ingrese el nombre de la prótesis que desea eliminar: ")
 
                     sistema.eliminar_protesis(nombre_protesis)
-
-                    print(f"Prótesis '{nombre_protesis}' eliminada con éxito.")
-
-                else:
-                    print("Opción no válida. Intente de nuevo.")
 
             # EDITAR PRÓTESIS
             elif inicio == 3:
