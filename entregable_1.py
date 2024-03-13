@@ -271,12 +271,13 @@ class Sistema:
     def eliminar_protesis(self, nombre_protesis):
         for lista in [self.__lista_marcapasos, self.__lista_stent_coronario, self.__lista_implante_dental,
                     self.__lista_imp_rodilla, self.__lista_imp_cadera]:
-            for protesis in lista[:]:  # Utiliza una copia de la lista para evitar problemas al modificarla
+            for protesis in lista[:]:  
                 if protesis.get_nombre() == nombre_protesis:
                     lista.remove(protesis)
                     print(f"Prótesis '{nombre_protesis}' eliminada con éxito.")
                     return
         print(f"Prótesis '{nombre_protesis}' no encontrada.")
+        
 
     def editar_protesis(self, nombre_protesis, atributo, nuevo_valor):
         for lista in [self.__lista_marcapasos, self.__lista_stent_coronario, self.__lista_implante_dental,
@@ -285,6 +286,15 @@ class Sistema:
                 if protesis.get_nombre() == nombre_protesis:
                     setattr(protesis, atributo, nuevo_valor)
                     print(f"Edición exitosa. Nuevo valor para '{atributo}': {nuevo_valor}")
+
+                    # Actualizar información en el inventario
+                    self.actualizar_inventario()
+
+                    # Actualizar la información en la lista de pacientes
+                    for paciente in self.__lista_pacientes:
+                        for implante_info in paciente.ver_implantes():
+                            if implante_info['implante'].get_nombre() == nombre_protesis:
+                                implante_info['implante'] = protesis
                     return
         print(f"Prótesis '{nombre_protesis}' no encontrada.")
 
@@ -315,241 +325,365 @@ class Sistema:
 
         print(f"Paciente '{nombre_paciente}' no encontrado.")
 
+    def actualizar_inventario(self):
+        self.__lista_marcapasos = [p for p in self.__lista_marcapasos if p]
+        self.__lista_stent_coronario = [s for s in self.__lista_stent_coronario if s]
+        self.__lista_implante_dental = [id for id in self.__lista_implante_dental if id]
+        self.__lista_imp_rodilla = [ir for ir in self.__lista_imp_rodilla if ir]
+        self.__lista_imp_cadera = [ic for ic in self.__lista_imp_cadera if ic]
+
+        # Actualizar información en la lista de pacientes
+        for paciente in self.__lista_pacientes:
+            for implante_info in paciente.ver_implantes():
+                nombre_implante = implante_info['implante'].get_nombre()
+
+                for lista in [self.__lista_marcapasos, self.__lista_stent_coronario, self.__lista_implante_dental,
+                            self.__lista_imp_rodilla, self.__lista_imp_cadera]:
+                    for protesis in lista:
+                        if protesis.get_nombre() == nombre_implante:
+                            implante_info['implante'] = protesis
+    
+    def ver_inventario(self):
+        print("-" * 30)
+        print("Inventario completo:")
+
+        # Marcapasos
+        for marcapasos in self.ver_marcapasos():
+            print(f"Tipo: Marcapasos, Nombre: {marcapasos.get_nombre()}, Electrodos: {marcapasos.get_num_electrodos()}, "
+                f"Alámbrico/Inalámbrico: {marcapasos.get_almbrico_o_inalambrico()}, Frecuencia: {marcapasos.get_frecuencia_estimulacion()}")
+
+        # Stent Coronario
+        for stent in self.ver_stent_coronario():
+            print(f"Tipo: Stent Coronario, Nombre: {stent.get_nombre()}, Longitud: {stent.get_longitud()}, "
+                f"Diametro: {stent.get_diametro()}, Material: {stent.get_material()}")
+
+        # Implante Dental
+        for imp_dental in self.ver_implante_dental():
+            print(f"Tipo: Implante Dental, Nombre: {imp_dental.get_nombre()}, Forma: {imp_dental.get_forma()}, "
+                f"Sistema de Fijación: {imp_dental.get_sis_fijacion()}, Material: {imp_dental.get_material()}")
+
+        # Implante de Rodilla
+        for imp_rodilla in self.ver_implante_rodilla():
+            print(f"Tipo: Implante de Rodilla, Nombre: {imp_rodilla.get_nombre()}, Material: {imp_rodilla.get_material()}, "
+                f"Tipo de Fijación: {imp_rodilla.get_tipo_fijacion()}, Tamaño: {imp_rodilla.get_tamaño()}")
+
+        # Implante de Cadera
+        for imp_cadera in self.ver_implante_cadera():
+            print(f"Tipo: Implante de Cadera, Nombre: {imp_cadera.get_nombre()}, Material: {imp_cadera.get_material()}, "
+                f"Tipo de Fijación: {imp_cadera.get_tipo_fijacion()}, Tamaño: {imp_cadera.get_tamaño()}")
+
+        print("-" * 30)
+
 def main():
-    sistema = Sistema()
-    print("-" * 30)
-    print("Bienvenido al sistema de gestión de inventarios de prótesis")
-    print("-" * 30)
+    try:
+        sistema = Sistema()
+        print("-" * 30)
+        print("Bienvenido al sistema de gestión de inventarios de prótesis")
+        print("-" * 30)
 
-    while True:
-        try:
-            # MENÚ
-            print("¿Qué desea hacer?\n")
-            print("1. Agregar nuevo implante\n2. Eliminar\n3. Editar\n4. Visualizar\n"
-                "5. Asignación de prótesis a paciente\n6. Seguimiento\n7. Visualizar seguimiento")
-            inicio = int(input("Ingrese una opción: "))
+        while True:
+            try:
+                # MENÚ
+                print("¿Qué desea hacer?\n")
+                print("1. Agregar nuevo implante\n2. Eliminar\n3. Editar\n4. Visualizar\n"
+                    "5. Asignación de prótesis a paciente\n6. Seguimiento\n7. Visualizar seguimiento")
+                inicio = int(input("Ingrese una opción: "))
 
-            # AGREGAR NUEVA PRÓTESIS
-            if inicio == 1:
-                print("-" * 30)
-                print("¿Qué tipo de prótesis desea agregar?")
-                print("-" * 30)
-                print("1. Marcapasos\n2. Stent coronario\n3. Implante dental\n4. Implante de rodilla\n5. Implante de cadera\n")
-                entrada = int(input("Ingrese una opción: "))
-
-                if entrada in range(1, 6):
-                    nombre = input("Nombre de la prótesis: ")
-
-                    if entrada == 1:
-                        num_electrodos = int(input("Número de electrodos: "))
-                        alambrico_inalambrico = input("Alámbrico o inalámbrico: ")
-                        frec_estimu = float(input("Frecuencia de estimulación: "))
-
-                        marcapasos = Marcapasos()
-                        marcapasos.set_nombre(nombre)
-                        marcapasos.set_num_electrodos(num_electrodos)
-                        marcapasos.set_almbrico_o_inalambrico(alambrico_inalambrico)
-                        marcapasos.set_frecuencia_estimulacion(frec_estimu)
-
-                        sistema.ingresar_marcapasos(marcapasos)
-                        print("¡Registro Exitoso!")
-
-                    elif entrada == 2:
-                        longitud = float(input("Longitud: "))
-                        diametro = float(input("Diámetro: "))
-                        material = input("Material: ")
-
-                        stent = StentCoronario()
-                        stent.set_nombre(nombre)
-                        stent.set_longitud(longitud)
-                        stent.set_diametro(diametro)
-                        stent.set_material(material)
-
-                        sistema.ingresar_stent_coronario(stent)
-                        print("¡Registro Exitoso!")
-
-                    elif entrada == 3:
-                        forma = input("Forma: ")
-                        sis_fijacion = input("Sistema de fijación: ")
-                        material = input("Material: ")
-
-                        imp_dental = ImplanteDental()
-                        imp_dental.set_nombre(nombre)
-                        imp_dental.set_forma(forma)
-                        imp_dental.set_sis_fijacion(sis_fijacion)
-                        imp_dental.set_material(material)
-
-                        sistema.ingresar_implante_dental(imp_dental)
-                        print("¡Registro Exitoso!")
-
-                    elif entrada == 4:
-                        material = input("Material: ")
-                        tipo_fijacion = input("Tipo de fijación: ")
-                        tamaño = float(input("Tamaño: "))
-
-                        imp_rodilla = ImplanteRodilla()
-                        imp_rodilla.set_nombre(nombre)
-                        imp_rodilla.set_material(material)
-                        imp_rodilla.set_tipo_fijacion(tipo_fijacion)
-                        imp_rodilla.set_tamaño(tamaño)
-
-                        sistema.ingresar_implante_rodilla(imp_rodilla)
-                        print("¡Registro Exitoso!")
-
-                    elif entrada == 5:
-                        material = input("Material: ")
-                        tipo_fijacion = input("Tipo de fijación: ")
-                        tamaño = float(input("Tamaño: "))
-
-                        imp_cadera = ImplanteCadera()
-                        imp_cadera.set_nombre(nombre)
-                        imp_cadera.set_material(material)
-                        imp_cadera.set_tipo_fijacion(tipo_fijacion)
-                        imp_cadera.set_tamaño(tamaño)
-
-                        sistema.ingresar_implante_cadera(imp_cadera)
-                        print("¡Registro Exitoso!")
-
-            # ELIMINAR PRÓTESIS
-            elif inicio == 2:
-                print("-" * 30)
-                print("¿Qué tipo de prótesis desea eliminar?")
-                print("-" * 30)
-                print("1. Marcapasos\n2. Stent coronario\n3. Implante dental\n4. Implante de rodilla\n5. Implante de cadera\n")
-                tipo_protesis = int(input("Ingrese una opción: "))
-
-                if tipo_protesis in range(1, 6):
+                # AGREGAR NUEVA PRÓTESIS
+                if inicio == 1:
                     print("-" * 30)
-                    nombre_protesis = input("Ingrese el nombre de la prótesis que desea eliminar: ")
-
-                    sistema.eliminar_protesis(nombre_protesis)
-
-            # EDITAR PRÓTESIS
-            elif inicio == 3:
-                print("-" * 30)
-                print("¿Qué tipo de prótesis desea editar?")
-                print("-" * 30)
-                print("1. Marcapasos\n2. Stent coronario\n3. Implante dental\n4. Implante de rodilla\n5. Implante de cadera\n")
-                tipo_protesis = int(input("Ingrese una opción: "))
-
-                if tipo_protesis in range(1, 6):
+                    print("¿Qué tipo de prótesis desea agregar?")
                     print("-" * 30)
-                    nombre_protesis = input("Ingrese el nombre de la prótesis que desea editar: ")
-                    atributo = input("Ingrese el atributo que desea editar: ")
-                    nuevo_valor = input(f"Ingrese el nuevo valor para '{atributo}': ")
+                    print("1. Marcapasos\n2. Stent coronario\n3. Implante dental\n4. Implante de rodilla\n5. Implante de cadera\n")
+                    entrada = int(input("Ingrese una opción: "))
 
-                    sistema.editar_protesis(nombre_protesis, atributo, nuevo_valor)
+                    if entrada in range(1, 6):
+                        nombre = input("Nombre de la prótesis: ")
+
+                        if entrada == 1:
+                            
+                            while True:
+                                try:
+                                    num_electrodos = int(input("Número de electrodos: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+
+                            alambrico_inalambrico = input("Alámbrico o inalámbrico: ")
+                            while True:
+                                try:
+                                    frec_estimu = float(input("Frecuencia de estimulación: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+                            
+
+                            marcapasos = Marcapasos()
+                            marcapasos.set_nombre(nombre)
+                            marcapasos.set_num_electrodos(num_electrodos)
+                            marcapasos.set_almbrico_o_inalambrico(alambrico_inalambrico)
+                            marcapasos.set_frecuencia_estimulacion(frec_estimu)
+
+                            sistema.ingresar_marcapasos(marcapasos)
+                            print("¡Registro Exitoso!")
+
+                        elif entrada == 2:
+                            while True:
+                                try:
+                                    longitud = float(input("Longitud: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+                            while True:
+                                try:
+                                    diametro = float(input("Diámetro: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+                            
+                            material = input("Material: ")
+
+                            stent = StentCoronario()
+                            stent.set_nombre(nombre)
+                            stent.set_longitud(longitud)
+                            stent.set_diametro(diametro)
+                            stent.set_material(material)
+
+                            sistema.ingresar_stent_coronario(stent)
+                            print("¡Registro Exitoso!")
+
+                        elif entrada == 3:
+                            forma = input("Forma: ")
+                            sis_fijacion = input("Sistema de fijación: ")
+                            material = input("Material: ")
+
+                            imp_dental = ImplanteDental()
+                            imp_dental.set_nombre(nombre)
+                            imp_dental.set_forma(forma)
+                            imp_dental.set_sis_fijacion(sis_fijacion)
+                            imp_dental.set_material(material)
+
+                            sistema.ingresar_implante_dental(imp_dental)
+                            print("¡Registro Exitoso!")
+
+                        elif entrada == 4:
+                            material = input("Material: ")
+                            tipo_fijacion = input("Tipo de fijación: ")
+                            while True:
+                                try:
+                                    tamaño = float(input("Tamaño: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+                            
+
+                            imp_rodilla = ImplanteRodilla()
+                            imp_rodilla.set_nombre(nombre)
+                            imp_rodilla.set_material(material)
+                            imp_rodilla.set_tipo_fijacion(tipo_fijacion)
+                            imp_rodilla.set_tamaño(tamaño)
+
+                            sistema.ingresar_implante_rodilla(imp_rodilla)
+                            print("¡Registro Exitoso!")
+
+                        elif entrada == 5:
+                            material = input("Material: ")
+                            tipo_fijacion = input("Tipo de fijación: ")
+                            while True:
+                                try:
+                                    tamaño = float(input("Tamaño: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+                            
+
+                            imp_cadera = ImplanteCadera()
+                            imp_cadera.set_nombre(nombre)
+                            imp_cadera.set_material(material)
+                            imp_cadera.set_tipo_fijacion(tipo_fijacion)
+                            imp_cadera.set_tamaño(tamaño)
+
+                            sistema.ingresar_implante_cadera(imp_cadera)
+                            print("¡Registro Exitoso!")
+
+                # ELIMINAR PRÓTESIS
+                elif inicio == 2:
+                    print("-" * 30)
+                    print("¿Qué tipo de prótesis desea eliminar?")
+                    print("-" * 30)
+                    print("1. Marcapasos\n2. Stent coronario\n3. Implante dental\n4. Implante de rodilla\n5. Implante de cadera\n")
+                    tipo_protesis = int(input("Ingrese una opción: "))
+
+                    if tipo_protesis in range(1, 6):
+                        print("-" * 30)
+                        nombre_protesis = input("Ingrese el nombre de la prótesis que desea eliminar: ")
+
+                        sistema.eliminar_protesis(nombre_protesis)
+
+                # EDITAR PRÓTESIS
+                elif inicio == 3:
+                    print("-" * 30)
+                    print("¿Qué tipo de prótesis desea editar?")
+                    print("-" * 30)
+                    print("1. Marcapasos\n2. Stent coronario\n3. Implante dental\n4. Implante de rodilla\n5. Implante de cadera\n")
+                    tipo_protesis = int(input("Ingrese una opción: "))
+
+                    if tipo_protesis in range(1, 6):
+                        print("-" * 30)
+                        nombre_protesis = input("Ingrese el nombre de la prótesis que desea editar: ")
+                        atributo = input("Ingrese el atributo que desea editar: ")
+
+                        # Obtener el nuevo valor
+                        nuevo_valor = input(f"Ingrese el nuevo valor para '{atributo}': ")
+
+                        # Editar la prótesis y guardar cambios
+                        sistema.editar_protesis(nombre_protesis, atributo, nuevo_valor)
+                        sistema.actualizar_inventario()  # Llamamos explícitamente al método de actualización del inventario
+
+                        # Visualizar los cambios en el inventario
+                        sistema.ver_inventario()
+
+                # VISUALIZAR INVENTARIO
+                elif inicio == 4:
+                    print("-" * 30)
+                    print("Inventario completo:")
+
+                    # Marcapasos
+                    for marcapasos in sistema.ver_marcapasos():
+                        print(f"Tipo: Marcapasos, Nombre: {marcapasos.get_nombre()}, Electrodos: {marcapasos.get_num_electrodos()}, "
+                            f"Alámbrico/Inalámbrico: {marcapasos.get_almbrico_o_inalambrico()}, Frecuencia: {marcapasos.get_frecuencia_estimulacion()}")
+
+                    # Stent Coronario
+                    for stent in sistema.ver_stent_coronario():
+                        print(f"Tipo: Stent Coronario, Nombre: {stent.get_nombre()}, Longitud: {stent.get_longitud()}, "
+                            f"Diametro: {stent.get_diametro()}, Material: {stent.get_material()}")
+
+                    # Implante Dental
+                    for imp_dental in sistema.ver_implante_dental():
+                        print(f"Tipo: Implante Dental, Nombre: {imp_dental.get_nombre()}, Forma: {imp_dental.get_forma()}, "
+                            f"Sistema de Fijación: {imp_dental.get_sis_fijacion()}, Material: {imp_dental.get_material()}")
+
+                    # Implante de Rodilla
+                    for imp_rodilla in sistema.ver_implante_rodilla():
+                        print(f"Tipo: Implante de Rodilla, Nombre: {imp_rodilla.get_nombre()}, Material: {imp_rodilla.get_material()}, "
+                            f"Tipo de Fijación: {imp_rodilla.get_tipo_fijacion()}, Tamaño: {imp_rodilla.get_tamaño()}")
+
+                    # Implante de Cadera
+                    for imp_cadera in sistema.ver_implante_cadera():
+                        print(f"Tipo: Implante de Cadera, Nombre: {imp_cadera.get_nombre()}, Material: {imp_cadera.get_material()}, "
+                            f"Tipo de Fijación: {imp_cadera.get_tipo_fijacion()}, Tamaño: {imp_cadera.get_tamaño()}")
+
+                    print("-" * 30)
+
+                # ASIGNACIÓN DE PRÓTESIS A PACIENTE
+                elif inicio == 5:
+                    print("-" * 30)
+                    print("Crear Paciente y Asignar Prótesis")
+                    print("-" * 30)
+
+                    nombre_paciente = input("Ingrese el nombre del paciente: ")
+                    while True:
+                                try:
+                                    cedula_paciente = int(input("Ingrese la cédula del paciente: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+                    
+                    while True:
+                                try:
+                                    edad_paciente = int(input("Ingrese la edad del paciente: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+                    
+
+                    # Crear un nuevo objeto de paciente
+                    nuevo_paciente = Paciente()
+                    nuevo_paciente.set_nombre(nombre_paciente)
+                    nuevo_paciente.set_cedula(cedula_paciente)
+                    nuevo_paciente.set_edad(edad_paciente)
+
+                    # Agregar el paciente al sistema
+                    sistema.ingresar_paciente(nuevo_paciente)
+                    print(f"Paciente '{nombre_paciente}' creado exitosamente.")
+
+                    # Asignar prótesis al paciente
+                    implante_a_asignar = input("Ingrese el nombre del implante a asignar: ")
+                    while True:
+                        fecha_implantacion = input("Ingrese la fecha de implantación (AAAA/MM/DD): ")
+                        try:
+                            datetime.strptime(fecha_implantacion, '%Y/%m/%d')
+                            break
+                        except ValueError:
+                            print("Formato de fecha inválido. Por favor, ingrese la fecha en el formato AAAA/MM/DD.")
+                    
+                    medico_responsable = input("Ingrese el nombre del médico responsable: ")  # Agregado
+
+                    # Verificar si el implante existe en el inventario
+                    implante_existente = None
+                    for implante in sistema.ver_implante_por_nombre(implante_a_asignar):
+                        implante_existente = implante
+                        break
+
+                    if implante_existente:
+                        # Asignar implante al paciente
+                        nuevo_paciente.asignar_implante(implante_existente, fecha_implantacion, medico_responsable)  # Corregido
+                        print(f"Implante '{implante_a_asignar}' asignado exitosamente al paciente '{nombre_paciente}'.")
+                    else:
+                        print(f"Implante '{implante_a_asignar}' no encontrado en el inventario.")
+
+                # SEGUMIENTO DE PACIENTES E IMPLANTES
+                elif inicio == 6:
+                    print("-" * 30)
+                    print("Seguimiento de Pacientes e Implantes")
+                    print("-" * 30)
+
+                    nombre_paciente_seguimiento = input("Ingrese el nombre del paciente: ")
+                    while True:
+                        fecha_revision = input("Ingrese la fecha de revisión (YYYY/MM/DD): ")
+                        try:
+                            datetime.strptime(fecha_implantacion, '%Y/%m/%d')
+                            break
+                        except ValueError:
+                            print(" Formato de fecha inválido. Por favor, ingrese la fecha en el formato AAAA/MM/DD.")
+                    
+                    estado_implante = input("Ingrese el estado del implante: ")
+
+                    for paciente in sistema.ver_pacientes():
+                        if paciente.get_nombre() == nombre_paciente_seguimiento:
+                            seguimiento_info = paciente.seguimiento_implante(fecha_revision, estado_implante)
+
+                            
+                    
+                    
+                            
+
+                # SALIR
+                elif inicio == 7:
+                    print("-" * 30)
+                    print("Visualizar Seguimiento de Implantes")
+                    print("-" * 30)
+
+                    nombre_paciente_seguimiento = input("Ingrese el nombre del paciente: ")
+
+                    for paciente in sistema.ver_pacientes():
+                        if paciente.get_nombre() == nombre_paciente_seguimiento:
+                            paciente.visualizar_seguimiento_implantes()  # Corregido
+                            break
+                    else:
+                        print(f"Paciente '{nombre_paciente_seguimiento}' no encontrado.")
+
+                elif inicio == 8:
+                    print("Saliendo del sistema...")
+                    break
 
                 else:
                     print("Opción no válida. Intente de nuevo.")
 
-            # VISUALIZAR INVENTARIO
-            elif inicio == 4:
-                print("-" * 30)
-                print("Inventario completo:")
-                for marcapasos in sistema.ver_marcapasos():
-                    print(f"Tipo: Marcapasos, Nombre: {marcapasos.get_nombre()}, Electrodos: {marcapasos.get_num_electrodos()}, "
-                        f"Alámbrico/Inalámbrico: {marcapasos.get_almbrico_o_inalambrico()}, Frecuencia: {marcapasos.get_frecuencia_estimulacion()}")
-
-                for stent in sistema.ver_stent_coronario():
-                    print(f"Tipo: Stent Coronario, Nombre: {stent.get_nombre()}, Longitud: {stent.get_longitud()}, "
-                        f"Diametro: {stent.get_diametro()}, Material: {stent.get_material()}")
-
-                for imp_dental in sistema.ver_implante_dental():
-                    print(f"Tipo: Implante Dental, Nombre: {imp_dental.get_nombre()}, Forma: {imp_dental.get_forma()}, "
-                        f"Sistema de Fijación: {imp_dental.get_sis_fijacion()}, Material: {imp_dental.get_material()}")
-
-                for imp_rodilla in sistema.ver_implante_rodilla():
-                    print(f"Tipo: Implante de Rodilla, Nombre: {imp_rodilla.get_nombre()}, Material: {imp_rodilla.get_material()}, "
-                        f"Tipo de Fijación: {imp_rodilla.get_tipo_fijacion()}, Tamaño: {imp_rodilla.get_tamaño()}")
-
-                for imp_cadera in sistema.ver_implante_cadera():
-                    print(f"Tipo: Implante de Cadera, Nombre: {imp_cadera.get_nombre()}, Material: {imp_cadera.get_material()}, "
-                        f"Tipo de Fijación: {imp_cadera.get_tipo_fijacion()}, Tamaño: {imp_cadera.get_tamaño()}")
-
-                print("-" * 30)
-
-            # ASIGNACIÓN DE PRÓTESIS A PACIENTE
-            elif inicio == 5:
-                print("-" * 30)
-                print("Crear Paciente y Asignar Prótesis")
-                print("-" * 30)
-
-                nombre_paciente = input("Ingrese el nombre del paciente: ")
-                cedula_paciente = int(input("Ingrese la cédula del paciente: "))
-                edad_paciente = int(input("Ingrese la edad del paciente: "))
-
-                # Crear un nuevo objeto de paciente
-                nuevo_paciente = Paciente()
-                nuevo_paciente.set_nombre(nombre_paciente)
-                nuevo_paciente.set_cedula(cedula_paciente)
-                nuevo_paciente.set_edad(edad_paciente)
-
-                # Agregar el paciente al sistema
-                sistema.ingresar_paciente(nuevo_paciente)
-                print(f"Paciente '{nombre_paciente}' creado exitosamente.")
-
-                # Asignar prótesis al paciente
-                implante_a_asignar = input("Ingrese el nombre del implante a asignar: ")
-                fecha_implantacion = input("Ingrese la fecha de implantación (YYYY-MM-DD): ")
-                medico_responsable = input("Ingrese el nombre del médico responsable: ")  # Agregado
-
-                # Verificar si el implante existe en el inventario
-                implante_existente = None
-                for implante in sistema.ver_implante_por_nombre(implante_a_asignar):
-                    implante_existente = implante
-                    break
-
-                if implante_existente:
-                    # Asignar implante al paciente
-                    nuevo_paciente.asignar_implante(implante_existente, fecha_implantacion, medico_responsable)  # Corregido
-                    print(f"Implante '{implante_a_asignar}' asignado exitosamente al paciente '{nombre_paciente}'.")
-                else:
-                    print(f"Implante '{implante_a_asignar}' no encontrado en el inventario.")
-
-            # SEGUMIENTO DE PACIENTES E IMPLANTES
-            elif inicio == 6:
-                print("-" * 30)
-                print("Seguimiento de Pacientes e Implantes")
-                print("-" * 30)
-
-                nombre_paciente_seguimiento = input("Ingrese el nombre del paciente: ")
-                fecha_revision = input("Ingrese la fecha de revisión (YYYY-MM-DD): ")
-                estado_implante = input("Ingrese el estado del implante: ")
-
-                for paciente in sistema.ver_pacientes():
-                    if paciente.get_nombre() == nombre_paciente_seguimiento:
-                        seguimiento_info = paciente.seguimiento_implante(fecha_revision, estado_implante)
-
-                        
-                
-                
-                        
-
-            # SALIR
-            elif inicio == 7:
-                print("-" * 30)
-                print("Visualizar Seguimiento de Implantes")
-                print("-" * 30)
-
-                nombre_paciente_seguimiento = input("Ingrese el nombre del paciente: ")
-
-                for paciente in sistema.ver_pacientes():
-                    if paciente.get_nombre() == nombre_paciente_seguimiento:
-                        paciente.visualizar_seguimiento_implantes()  # Corregido
-                        break
-                else:
-                    print(f"Paciente '{nombre_paciente_seguimiento}' no encontrado.")
-
-            elif inicio == 8:
-                print("Saliendo del sistema...")
-                break
-
-            else:
-                print("Opción no válida. Intente de nuevo.")
-
-        except ValueError:
-            print("Por favor, ingrese una opción válida.")
+            except ValueError:
+                print("Por favor, ingrese una opción válida.")
+    except ValueError:
+        print("Ingrese un valor valido")
 
 if __name__ == "__main__":
     main()
