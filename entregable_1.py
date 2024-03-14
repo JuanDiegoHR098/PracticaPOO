@@ -386,8 +386,14 @@ def main():
                 # MENÚ
                 print("¿Qué desea hacer?\n")
                 print("1. Agregar nuevo implante\n2. Eliminar\n3. Editar\n4. Visualizar\n"
-                    "5. Asignación de prótesis a paciente\n6. Seguimiento\n7. Visualizar seguimiento")
-                inicio = int(input("Ingrese una opción: "))
+                    "5. Asignación de prótesis a paciente\n6. Seguimiento\n7. Visualizar seguimiento\n8. Salir")
+                while True:
+                                try:
+                                    inicio = int(input("Ingrese una opción: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+                
 
                 # AGREGAR NUEVA PRÓTESIS
                 if inicio == 1:
@@ -395,7 +401,13 @@ def main():
                     print("¿Qué tipo de prótesis desea agregar?")
                     print("-" * 30)
                     print("1. Marcapasos\n2. Stent coronario\n3. Implante dental\n4. Implante de rodilla\n5. Implante de cadera\n")
-                    entrada = int(input("Ingrese una opción: "))
+                    while True:
+                                try:
+                                    entrada = int(input("Ingrese una opción: "))
+                                    break
+                                except ValueError:
+                                    print("Error: Por favor, ingrese solo números.")
+                    
 
                     if entrada in range(1, 6):
                         nombre = input("Nombre de la prótesis: ")
@@ -615,7 +627,7 @@ def main():
                             datetime.strptime(fecha_implantacion, '%Y/%m/%d')
                             break
                         except ValueError:
-                            print("Formato de fecha inválido. Por favor, ingrese la fecha en el formato AAAA/MM/DD.")
+                            print("Error: Formato de fecha inválido. Por favor, ingrese la fecha en el formato AAAA/MM/DD.")
                     
                     medico_responsable = input("Ingrese el nombre del médico responsable: ")  # Agregado
 
@@ -639,24 +651,18 @@ def main():
                     print("-" * 30)
 
                     nombre_paciente_seguimiento = input("Ingrese el nombre del paciente: ")
-                    while True:
-                        fecha_revision = input("Ingrese la fecha de revisión (YYYY/MM/DD): ")
-                        try:
-                            datetime.strptime(fecha_implantacion, '%Y/%m/%d')
-                            break
-                        except ValueError:
-                            print(" Formato de fecha inválido. Por favor, ingrese la fecha en el formato AAAA/MM/DD.")
-                    
+                    fecha_revision = input("Ingrese la fecha de revisión (YYYY/MM/DD): ")
                     estado_implante = input("Ingrese el estado del implante: ")
 
                     for paciente in sistema.ver_pacientes():
                         if paciente.get_nombre() == nombre_paciente_seguimiento:
                             seguimiento_info = paciente.seguimiento_implante(fecha_revision, estado_implante)
-
-                            
-                    
-                    
-                            
+                            if implante_existente:
+                                # Asignar implante al paciente
+                                nuevo_paciente.asignar_implante(implante_existente, fecha_implantacion, medico_responsable)  # Corregido
+                                print(f"Implante '{implante_a_asignar}' asignado exitosamente al paciente '{nombre_paciente}'.")
+                            else:
+                                print(f"Implante '{implante_a_asignar}' no encontrado en el inventario.")
 
                 # SALIR
                 elif inicio == 7:
