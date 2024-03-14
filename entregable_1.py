@@ -657,12 +657,6 @@ def main():
                     for paciente in sistema.ver_pacientes():
                         if paciente.get_nombre() == nombre_paciente_seguimiento:
                             seguimiento_info = paciente.seguimiento_implante(fecha_revision, estado_implante)
-                            if implante_existente:
-                                # Asignar implante al paciente
-                                nuevo_paciente.asignar_implante(implante_existente, fecha_implantacion, medico_responsable)  # Corregido
-                                print(f"Implante '{implante_a_asignar}' asignado exitosamente al paciente '{nombre_paciente}'.")
-                            else:
-                                print(f"Implante '{implante_a_asignar}' no encontrado en el inventario.")
 
                 # SALIR
                 elif inicio == 7:
